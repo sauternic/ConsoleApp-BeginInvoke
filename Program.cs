@@ -18,7 +18,7 @@ namespace ConsoleApp1
             l1 = lange;
 
             //Asynchroner Aufruf mit BeginInvoke
-            IAsyncResult result = l1.BeginInvoke(new AsyncCallback(Callback), null);
+            IAsyncResult result = l1.BeginInvoke(new AsyncCallback(delegate(IAsyncResult r) { Console.WriteLine(l1.EndInvoke(r)); } ), null);
             
 
             Console.WriteLine("Wenn das zuerst kommt blockiert nicht! :)");
@@ -28,17 +28,12 @@ namespace ConsoleApp1
             Console.ReadKey();
         }
         
-        static void Callback(IAsyncResult result)
-        {
-            Console.WriteLine(l1.EndInvoke(result));
-        }
-        
 
         static string lange()
         {
             Thread.Sleep(3000);
             Console.WriteLine();
-            return "Bin fergig";
+            return "Bin fertig";
         }
 
 
